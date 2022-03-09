@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "VrCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "VrPlayerController.generated.h"
 
@@ -14,4 +15,23 @@ class P_VRINTERFACE_API AVrPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+	//FUNC
+	//Constructor
+	AVrPlayerController();
+
+
+	//Variables
+
+	/** This Is A Refereance to the current player pawn*/
+	UPROPERTY(Transient, EditAnywhere, BlueprintReadWrite)
+	AVrCharacter* currentPawn = nullptr;
+
+
+
+
+protected:
+
+	virtual void BeginPlay() override;
+
 };
