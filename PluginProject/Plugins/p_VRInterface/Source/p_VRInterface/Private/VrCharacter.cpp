@@ -13,12 +13,17 @@ AVrCharacter::AVrCharacter()
 	characterCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Character Capsule"));
 	characterCapsule->InitCapsuleSize(40, characterHeight);
 	SetRootComponent(characterCapsule);
+	characterCapsule->SetSimulatePhysics(true);
 	characterCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Character Camera"));
 	characterCamera->SetupAttachment(characterCapsule);
 	
 	
-	
 
+
+	
+	characterCapsule->SetCollisionProfileName(TEXT("Pawn"));
+	characterCapsule->BodyInstance.bLockXRotation = true;
+	characterCapsule->BodyInstance.bLockYRotation = true;
 
 }
 
@@ -26,7 +31,6 @@ AVrCharacter::AVrCharacter()
 void AVrCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 
 	setHeight();
 	
@@ -37,13 +41,6 @@ void AVrCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector movementDirection = movementDirectionY + movementDirectionX;
-	movementDirection.Normalize();
-	if (!movementDirection.IsZero())
-	{
-		const FVector newLoc = GetActorLocation() + (movementDirection * DeltaTime * movementSpeed);
-		SetActorLocation(newLoc);
-	}
 
 }
 
@@ -70,15 +67,42 @@ void AVrCharacter::setNewHeight(float height)
 
 }
 
+void AVrCharacter::VrCharacterMovement(float xAxis, float yAxis, float DeltaTime)
+{
+	FVector Forward = characterCamera->GetForwardVector();
+	Forward.Normalize();
+	Forward = Forward * FMath::Clamp(yAxis, -1.0f, 1.0f);
+	Forward = FVector(Forward.X, Forward.Y, 0);
+
+	FVector Right = characterCamera->GetRightVector();
+	Right.Normalize();
+	Right = Right * FMath::Clamp(xAxis, -1.0f, 1.0f);
+	Right = FVector(Right.X, Right.Y, 0);
+
+	FVector movementDirection = Forward + Right;
+	if (!movementDirection.IsZero())
+	{
+		const FVector newLoc = GetActorLocation() + (movementDirection * DeltaTime * movementSpeed);
+		SetActorLocation(newLoc);
+	}
+
+
+}
+
 void AVrCharacter::MoveForward(float value)
 {
-	FVector Forward = characterCamera->GetForwardVector() * FMath::Clamp(value, -1.0f, 1.0f);
+
+	FVector Forward = characterCamera->GetForwardVector();
+	Forward.Normalize();
+	Forward = Forward * FMath::Clamp(value, -1.0f, 1.0f);
 	movementDirectionY = FVector(Forward.X, Forward.Y, 0);
 }
 
 void AVrCharacter::MoveRight(float value)
 {
-	FVector Right = characterCamera->GetRightVector() * FMath::Clamp(value, -1.0f, 1.0f);
+	FVector Right = characterCamera->GetRightVector();
+	Right.Normalize();
+	Right = Right * FMath::Clamp(value, -1.0f, 1.0f);
 	movementDirectionX = FVector(Right.X, Right.Y, 0);
 }
 

@@ -40,11 +40,14 @@ public:
 	// Sets default values for this pawn's properties
 	AVrCharacter();
 
-	//UFUNCTION(BlueprintCallable, Catagory = "Player Height")
+	UFUNCTION(BlueprintCallable, Category = "Player Height")
 	void setHeight();
 
-	//UFUNCTION(BlueprintCallable, Catagory = "Player Height")
+	UFUNCTION(BlueprintCallable, Category = "Player Height")
 	void setNewHeight(float height);
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void VrCharacterMovement(float xAxis, float yAxis, float DeltaTime);
 
 
 protected:
