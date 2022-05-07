@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Category = "VR_Plugin")
 class P_VRINTERFACE_API AVrGamemode : public AGameModeBase
 {
 	GENERATED_BODY()

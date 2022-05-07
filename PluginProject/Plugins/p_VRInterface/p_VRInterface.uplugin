@@ -1,8 +1,8 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
-	"FriendlyName": "p_VRInterface",
+	"VersionName": "1.01",
+	"FriendlyName": "p_VRPlugin",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "",
@@ -18,7 +18,20 @@
 		{
 			"Name": "p_VRInterface",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"BlacklistPlatforms": [
+				"IOS",
+				"Mac",
+				"Linux",
+				"Android",
+				"LinuxAArch64"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OpenXR",
+			"Enabled": true
 		}
 	]
 }

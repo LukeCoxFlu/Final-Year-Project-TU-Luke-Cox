@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Category = "VR_Plugin")
 class P_VRINTERFACE_API AVrPlayerController : public APlayerController
 {
 	GENERATED_BODY()
@@ -24,7 +24,7 @@ public:
 	//Variables
 
 	/** This Is A Refereance to the current player pawn*/
-	UPROPERTY(Transient, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Transient, EditAnywhere, BlueprintReadWrite, Category = "VR_Plugin")
 	AVrCharacter* currentPawn = nullptr;
 
 
